@@ -1,0 +1,372 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 40% 98%; /* #F8F9FA */
+    --foreground: 210 12% 23%; /* #37474F */
+
+    --card: 0 0% 100%;
+    --card-foreground: 210 12% 23%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 12% 23%;
+    
+    --primary: 206 90% 56%; /* Light Blue */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 158 45% 69%; /* #AED581 */
+    --secondary-foreground: 210 12% 23%;
+    
+    --muted: 210 33% 95%; /* #E1E8ED */
+    --muted-foreground: 206 17% 59%; /* #90A4AE */
+    
+    --accent: 210 33% 95%; /* Soft Green -> Neutral light gray/blue */
+    --accent-foreground: 210 12% 23%; /* White -> Dark grey-blue */
+
+    --destructive: 0 72% 67%; /* #E57373; */
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 210 20% 90%; /* #E1E8ED */
+    --input: 210 20% 90%;
+    --ring: 206 90% 56%;
+
+    --radius: 1rem;
+
+    --chart-1: 206 90% 56%;
+    --chart-2: 142 76% 36%;
+    --chart-3: 34 100% 64%;
+    --chart-4: 198 83% 66%;
+    --chart-5: 0 72% 67%;
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 210 12% 23%;
+    --sidebar-primary: 206 90% 56%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 210 12% 95%;
+    --sidebar-accent-foreground: 210 12% 23%;
+    --sidebar-border: 210 20% 90%;
+    --sidebar-ring: 206 90% 56%;
+  }
+
+  .dark {
+    --background: 240 10% 4%; /* #121212 */
+    --foreground: 240 5% 88%; /* #E0E0E0 */
+
+    --card: 240 5% 12%; /* #1E1E1E */
+    --card-foreground: 240 5% 88%;
+    
+    --popover: 240 5% 12%;
+    --popover-foreground: 240 5% 88%;
+    
+    --primary: 206 90% 56%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 142 76% 36%;
+    --secondary-foreground: 210 12% 23%;
+    
+    --muted: 240 4% 20%; /* #333333 */
+    --muted-foreground: 0 0% 62%; /* #9E9E9E */
+    
+    --accent: 240 4% 15%; /* Soft Green -> Neutral dark gray */
+    --accent-foreground: 240 5% 88%; /* White -> Light gray */
+
+    --destructive: 0 72% 67%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 240 4% 20%;
+    --input: 240 4% 20%;
+    --ring: 206 90% 56%;
+
+    --radius: 1rem;
+
+    --sidebar-background: 240 5% 12%;
+    --sidebar-foreground: 240 5% 88%;
+    --sidebar-primary: 206 90% 56%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 5% 16%;
+    --sidebar-accent-foreground: 240 5% 88%;
+    --sidebar-border: 240 4% 20%;
+    --sidebar-ring: 206 90% 56%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-body;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-headline;
+  }
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--muted-foreground) / 0.5) hsl(var(--background));
+  }
+  html::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  html::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--muted-foreground) / 0.3);
+    border-radius: 10px;
+    border: 2px solid hsl(var(--background));
+  }
+  html::-webkit-scrollbar-track {
+    background-color: hsl(var(--background));
+  }
+}
+
+/* Loader styles */
+.loader-container {
+  position: fixed;
+  inset: 0;
+  background-color: hsla(var(--background) / 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.loader-container.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.heart-rate {
+  width: 150px;
+  height: 73px;
+  position: relative;
+  margin: 20px auto;
+}
+
+.heart-rate .fade-in {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: hsl(var(--background));
+  top: 0;
+  right: 0;
+  animation: heartRateIn 1.5s linear infinite;
+}
+
+.heart-rate .fade-out {
+  position: absolute;
+  width: 120%;
+  height: 100%;
+  top: 0;
+  left: -120%;
+  animation: heartRateOut 1.5s linear infinite;
+  background-color: hsl(var(--background));
+}
+
+.heart-rate svg polyline {
+  stroke: hsl(var(--primary));
+}
+
+@keyframes heartRateIn {
+  0% {
+    width: 100%;
+  }
+  50% {
+    width: 0;
+  }
+  100% {
+    width: 0;
+  }
+}
+
+@keyframes heartRateOut {
+  0% {
+    left: -120%;
+  }
+  30% {
+    left: -120%;
+  }
+  100% {
+    left: 0;
+  }
+}
+
+
+/* Custom Radio Group Selector */
+.radio-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.radio-input-group * {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.radio-input-group label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0px 15px;
+  width: 100%;
+  cursor: pointer;
+  height: 28px;
+  position: relative;
+  border-radius: 8px;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.radio-input-group label:hover {
+  background-color: hsl(var(--muted));
+}
+
+.radio-input-group label.active {
+  background-color: hsl(var(--primary) / 0.1);
+  border: 1px solid hsl(var(--primary));
+  color: hsl(var(--primary));
+}
+
+.radio-input-group .label-text {
+  color: hsl(var(--foreground));
+}
+
+.radio-input-group label.active .label-text {
+  color: hsl(var(--primary));
+  font-weight: 600;
+}
+
+
+.radio-input-group label input[type="radio"] {
+  appearance: none;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background-color: hsl(var(--muted));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid hsl(var(--border));
+}
+
+.radio-input-group label input[type="radio"]:checked {
+  background-color: hsl(var(--primary));
+  animation: pulse 0.7s forwards;
+  border-color: hsl(var(--primary));
+}
+
+.radio-input-group label input[type="radio"]::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  transition: all 0.1s cubic-bezier(0.165, 0.84, 0.44, 1);
+  background-color: hsl(var(--primary-foreground));
+  transform: scale(0);
+}
+
+.radio-input-group label input[type="radio"]:checked::before {
+  transform: scale(1);
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 hsl(var(--primary) / 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 8px hsl(var(--primary) / 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 hsl(var(--primary) / 0);
+  }
+}
+
+/* Custom Theme Switcher */
+.btn-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-color-mode-switch {
+  display: inline-block;
+  margin: 0px;
+  position: relative;
+}
+
+.btn-color-mode-switch > label.btn-color-mode-switch-inner {
+  margin: 0px;
+  width: 110px;
+  height: 30px;
+  background: hsl(var(--muted));
+  border-radius: 26px;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.3s ease;
+  display: block;
+}
+
+.btn-color-mode-switch > label.btn-color-mode-switch-inner:before {
+  content: attr(data-on);
+  position: absolute;
+  font-size: 12px;
+  font-weight: 500;
+  top: 7px;
+  right: 12px;
+  color: hsl(var(--muted-foreground));
+  transition: all 0.3s ease;
+}
+
+.btn-color-mode-switch > label.btn-color-mode-switch-inner:after {
+  content: attr(data-off);
+  width: 55px;
+  height: 22px;
+  background: hsl(var(--card));
+  border-radius: 26px;
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0px 0px 6px -2px #111;
+  padding: 3px 0px;
+  font-size: 12px;
+  font-weight: 500;
+  color: hsl(var(--foreground));
+}
+
+.btn-color-mode-switch input[type="checkbox"] {
+  cursor: pointer;
+  width: 50px;
+  height: 25px;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  z-index: 1;
+  margin: 0px;
+}
+
+.btn-color-mode-switch input[type="checkbox"]:checked + label.btn-color-mode-switch-inner {
+  background: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
+}
+
+.btn-color-mode-switch input[type="checkbox"]:checked + label.btn-color-mode-switch-inner:after {
+  content: attr(data-on);
+  left: 51px;
+  background: hsl(var(--muted));
+}
+
+.btn-color-mode-switch input[type="checkbox"]:checked + label.btn-color-mode-switch-inner:before {
+  content: attr(data-off);
+  right: auto;
+  left: 14px;
+  color: hsl(var(--accent-foreground));
+}
